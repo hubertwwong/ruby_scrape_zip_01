@@ -44,7 +44,7 @@ describe "usps zip", :type => :feature do
     puts "zzzzzz " + foo
     
     
-    first(:xpath, '//div[@id="result-cities"]/p').value().to have_content 'LOS'
+    first(:xpath, '//div[@id="result-cities"]/p').value().to have_content 'LOS ANGELES CA'
     
     
     #find(:xpath, '//li[contains(.//a[@href = "#"]/text(), "foo")]').value
