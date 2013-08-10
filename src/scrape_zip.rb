@@ -72,5 +72,5 @@ class ScrapeZip
   # \w\w$
   # city
   # (\w+\s)+
-  
+  # http://rubular.com/
 end
