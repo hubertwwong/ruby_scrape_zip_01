@@ -33,15 +33,19 @@ describe "usps zip", :type => :feature do
     expect(page).to have_content 'Los Angeles'
   end
   
-  it "successful zip also returning city and state." do
+  xit "successful zip also returning city and state." do
     visit "https://tools.usps.com/go/ZipLookupAction!input.action"
     click_link("Cities by ZIP Code", exact: false)
     fill_in 'tZip', :with => '90026'
     click_button 'Find'
     
-    within("div#result-cities") do
-      expect(page).to have_content 'Los Angeles'
-    end
+    foo = first(:xpath, '//div[@id="result-cities"]/p').value()
+    
+    puts "zzzzzz " + foo
+    
+    
+    first(:xpath, '//div[@id="result-cities"]/p').value().to have_content 'LOS'
+    
     
     #find(:xpath, '//li[contains(.//a[@href = "#"]/text(), "foo")]').value
     #puts find(:xpath, '//div#result-cities/h3:first-child').value
