@@ -1,0 +1,30 @@
+****F
+
+Pending:
+  usps zip be present
+    # Temporarily disabled with xit
+    # ./spec/features/test01_spec.rb:4
+  usps zip can click on the zip code
+    # Temporarily disabled with xit
+    # ./spec/features/test01_spec.rb:11
+  usps zip unsuccessful zip.
+    # Temporarily disabled with xit
+    # ./spec/features/test01_spec.rb:18
+  usps zip success zip.
+    # Temporarily disabled with xit
+    # ./spec/features/test01_spec.rb:27
+
+Failures:
+
+  1) usps zip successful zip also returning city and state.
+     Failure/Error: expect(page).to have_content 'Los Angeles'
+       expected to find text "Los Angeles" in "The preferred city in 90026 is... LOS ANGELES CA To minimize delivery delays, use the preferred or acceptable city names for this ZIP Code™ rather than the following... ECHO PARK CA EDENDALE CA SILVER LAKE CA"
+     # ./spec/features/test01_spec.rb:43:in `block (3 levels) in <top (required)>'
+     # ./spec/features/test01_spec.rb:42:in `block (2 levels) in <top (required)>'
+
+Finished in 34.03 seconds
+5 examples, 1 failure, 4 pending
+
+Failed examples:
+
+rspec ./spec/features/test01_spec.rb:36 # usps zip successful zip also returning city and state.
