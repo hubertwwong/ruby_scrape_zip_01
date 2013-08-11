@@ -88,6 +88,10 @@ class ScrapeZip
     end
   end
   
+  
+  # UTILITY FUNCTIONS
+  ############################################################################
+  
   # saves a valid result to db.
   # assumes you used the hashing method in the funciton.
   def save_to_db(result_hash)
@@ -95,9 +99,6 @@ class ScrapeZip
     puts result_hash.inspect
     @db.replace_one(@table_name, result_hash)
   end
-  
-  # UTILITY FUNCTIONS
-  ############################################################################
   
   # USPS websites returns the result as a string,
   # returns the whole thing as a hash so you can insert result into db. 

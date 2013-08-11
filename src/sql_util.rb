@@ -173,10 +173,10 @@ class SqlUtil
     some_hash.values.each do |item|
       # need to check for strings.
       # and append single quotes.
-      cur_val = item
-      if cur_val.is_a? String
-        cur_val = "'" + item + "'"
-      end
+      #cur_val = item
+      #if cur_val.is_a? String
+        cur_val = "'" + item.to_s + "'"
+      #end
     
       # first value does not have an intial space.
       if first_val
