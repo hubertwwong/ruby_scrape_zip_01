@@ -63,14 +63,37 @@ class ScrapeZip
       # found a valid zip.
       # the first p tag contains the city.
       result = first(:xpath, '//div[@id="result-cities"]/p')
-      result.text  
+      #result.text
+      self.city_state_as_hash(code, result.text)
     end  
+  end
+  
+  # UTILITY FUNCTIONS
+  ############################################################################
+  
+  # USPS websites returns the result as a string,
+  # returns the whole thing as a hash so you can insert result into db. 
+  # assumes city state is in this format 'LOS ANGELES CA'
+  #
+  # so if the zip is 90026 and the string is 'LOS ANGELES CA'
+  # it should return {'city' => 'LOS ANGELES', 'state' => 'CA', 'zip_code' => 91770}
+  def city_state_as_hash(zip_code, city_state_str)
+    result_hash = Hash.new
+    
+    # need rstrip to remove extra spaces on the right side.
+    result_hash['city'] = /(\w+\s)+/.match(city_state_str)[0].rstrip
+    result_hash['state'] = /\w\w$/.match(city_state_str)[0]
+    result_hash['zip_code'] = zip_code
+    
+    result_hash
   end
   
   # regex for city state.
   # state
   # \w\w$
+  #
   # city
   # (\w+\s)+
+  #
   # http://rubular.com/
 end

@@ -54,9 +54,31 @@ describe ScrapeZip do
           @s.visit_url
           @s.click_zip_search_tab
           result = @s.enter_zip_and_search '90026'
-          result.should == 'LOS ANGELES CA'
+          
+          #result.should == 'LOS ANGELES CA'
+          result['state'].should == 'CA'
+          result['city'].should == 'LOS ANGELES'
+          result['zip_code'].should == '90026'
         end
       end
     end
+  
+  describe 'utility methods' do
+  
+    describe 'city_state_as_hash' do
+      before(:each) do
+        @s = ScrapeZip.new
+      end
+      
+      it '90026 LOS ANGELES CA should return a valid hash' do
+        ss = ScrapeZip.new
+        result = @s.city_state_as_hash('90026', 'LOS ANGELES CA')
+        puts result.inspect
+        result['city'].should == 'LOS ANGELES'
+        result['state'].should == 'CA'
+        result['zip_code'].should == '90026'
+      end
+    end
+  end
   
 end

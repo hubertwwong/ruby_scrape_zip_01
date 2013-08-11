@@ -14,23 +14,29 @@ class SqlUtil
   
   # INSERT METHODS
   ############################################################################
+  # keep in mind that keys in the hash values must be strings.
+  # they can't be symbols right now.
+  # so { :foo => 'bar' } wont work.
+  # and { 'foo' => 'bar' } works.
   
-  # BROKEN....
   # inserts a single row into db. 
   # takes a hash...
-  # assumes you know what all of the col names are.
-  # and the order.
-  def insert_one(table_name, vals)
+  # using replace to simplify some things.
+  # not sure what its suppose to return..
+  # just leave it to be false for now.
+  def replace_one(table_name, vals)
     begin
       # "INSERT INTO Writers(Name) VALUES('Jack London')"
       con = Mysql.new(@url, @user, @password, @db_name)
       
-      rs = con.query("INSERT INTO " + table_name + " (" + col_name + ") VALUES (" + col_names + ")")
-      result = rs.fetch_row
-      #puts result.inspect
-      self.hash_arrays(self.read_col_names(table_name), result)
+      col_name = self.hash_get_keys_as_str(vals)
+      col_vals = self.hash_get_values_as_str(vals)
+      
+      rs = con.query("REPLACE INTO " + table_name + " (" + col_name + ") VALUES (" + col_vals + ")")
+      true
     rescue Mysql::Error => e
       self.print_error e
+      false
     ensure
       con.close if con
     end
@@ -164,15 +170,22 @@ class SqlUtil
     final_str = ""
     first_val = true
     
-    some_hash.keys.each do |item|
+    some_hash.values.each do |item|
+      # need to check for strings.
+      # and append single quotes.
+      cur_val = item
+      if cur_val.is_a? String
+        cur_val = "'" + item + "'"
+      end
+    
       # first value does not have an intial space.
       if first_val
         first_val = false
-        final_str += item
+        final_str += cur_val
+      else
+        # all other items. add a space first.
+        final_str += ", " + cur_val
       end
-      
-      # all other items. add a space first.
-      final_str += " " + item
     end
     
     final_str
