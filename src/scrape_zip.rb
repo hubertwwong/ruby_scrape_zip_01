@@ -29,10 +29,7 @@ class ScrapeZip
     @db_name= params.fetch(:db_name)
     @table_name= params.fetch(:table_name)
     
-    # this is broken..
     # init db helper
-    #@db = SqlUtil.new(@url, @user, @password, @db_name)
-    # load account details.
     @db = SqlUtil.new(:url => @url, 
                       :user=> @user, 
                       :password => @password, 
@@ -82,19 +79,22 @@ class ScrapeZip
       # the first p tag contains the city.
       result = first(:xpath, '//div[@id="result-cities"]/p')
       #result.text
+      hash_result = self.city_state_as_hash(code, result.text)
       
       # save to db.
-      #self.save_to_db(self.city_state_as_hash(code, result.text))
+      self.save_to_db(hash_result)
       
-      self.city_state_as_hash(code, result.text)
+      hash_result
     end
   end
   
   # saves a valid result to db.
   # assumes you used the hashing method in the funciton.
-  #def save_to_db(city_state_hash)
-  #  @db.replace_one(@table_name, city_state_hash)
-  #end
+  def save_to_db(result_hash)
+    puts @table_name
+    puts result_hash.inspect
+    @db.replace_one(@table_name, result_hash)
+  end
   
   # UTILITY FUNCTIONS
   ############################################################################
@@ -109,9 +109,9 @@ class ScrapeZip
     result_hash = Hash.new
     
     # need rstrip to remove extra spaces on the right side.
-    result_hash['city'] = /(\w+\s)+/.match(city_state_str)[0].rstrip
-    result_hash['state'] = /\w\w$/.match(city_state_str)[0]
-    result_hash['zip_code'] = zip_code
+    result_hash['CITY'] = /(\w+\s)+/.match(city_state_str)[0].rstrip
+    result_hash['STATE'] = /\w\w$/.match(city_state_str)[0]
+    result_hash['ZIP'] = zip_code
     
     result_hash
   end

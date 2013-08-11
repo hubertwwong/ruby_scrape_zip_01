@@ -89,9 +89,9 @@ describe ScrapeZip do
           result = @s.enter_zip_and_search '90026'
           
           #result.should == 'LOS ANGELES CA'
-          result['state'].should == 'CA'
-          result['city'].should == 'LOS ANGELES'
-          result['zip_code'].should == '90026'
+          result['STATE'].should == 'CA'
+          result['CITY'].should == 'LOS ANGELES'
+          result['ZIP'].should == '90026'
         end
       end
     end
@@ -119,9 +119,9 @@ describe ScrapeZip do
       xit '90026 LOS ANGELES CA should return a valid hash' do
         result = @s.city_state_as_hash('90026', 'LOS ANGELES CA')
         puts result.inspect
-        result['city'].should == 'LOS ANGELES'
-        result['state'].should == 'CA'
-        result['zip_code'].should == '90026'
+        result['CITY'].should == 'LOS ANGELES'
+        result['STATE'].should == 'CA'
+        result['ZIP'].should == '90026'
       end
     end
   end
