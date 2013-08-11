@@ -5,16 +5,49 @@ require_relative '../../src/scrape_util'
 describe ScrapeZip do
   
   describe 'test' do
+    before(:each) do
+      @web_url = 'https://tools.usps.com/go/ZipLookupAction!input.action'
+        
+      # db credentials
+      @user = 'root'
+      @password = 'password'
+      @url = 'localhost'
+      @db_name = 'test01'
+      @table_name = 'ZIP_POP'
+    
+      # init the scraper
+      @s = ScrapeZip.new(:web_url => @web_url, 
+                         :url => @url, 
+                         :user=> @user, 
+                         :password => @password, 
+                         :db_name => @db_name,
+                         :table_name => @table_name)
+    end
+    
     # testing if rspec is setup correctly.
     it "hello should be true" do
-      s = ScrapeZip.new
-      s.hello.should be_true
+      @s.hello.should be_true
     end
   end
   
   describe 'scraper' do
     before(:each) do
-      @s = ScrapeZip.new
+      @web_url = 'https://tools.usps.com/go/ZipLookupAction!input.action'
+        
+      # db credentials
+      @user = 'root'
+      @password = 'password'
+      @url = 'localhost'
+      @db_name = 'test01'
+      @table_name = 'ZIP_POP'
+    
+      # init the scraper
+      @s = ScrapeZip.new(:web_url => @web_url,
+                         :url => @url, 
+                         :user=> @user, 
+                         :password => @password, 
+                         :db_name => @db_name,
+                         :table_name => @table_name)
     end
     
     describe 'visit url' do
@@ -64,14 +97,26 @@ describe ScrapeZip do
     end
   
   describe 'utility methods' do
-  
     describe 'city_state_as_hash' do
       before(:each) do
-        @s = ScrapeZip.new
+        @web_url = 'https://tools.usps.com/go/ZipLookupAction!input.action'
+        
+        @user = 'root'
+        @password = 'password'
+        @url = 'localhost'
+        @db_name = 'test01'
+        @table_name = 'ZIP_POP'
+      
+        # init the scraper
+        @s = ScrapeZip.new(:web_url => @web_url,
+                           :url => @url, 
+                           :user=> @user, 
+                           :password => @password, 
+                           :db_name => @db_name,
+                           :table_name => @table_name)
       end
       
-      it '90026 LOS ANGELES CA should return a valid hash' do
-        ss = ScrapeZip.new
+      xit '90026 LOS ANGELES CA should return a valid hash' do
         result = @s.city_state_as_hash('90026', 'LOS ANGELES CA')
         puts result.inspect
         result['city'].should == 'LOS ANGELES'

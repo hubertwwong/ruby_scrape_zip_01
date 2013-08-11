@@ -3,33 +3,51 @@ require 'capybara'
 require 'capybara/dsl'
 
 require_relative 'scrape_util'
-
+require_relative 'sql_util'
 
 class ScrapeZip
   
+  # init in class instead of global space.
   include Capybara::DSL
   Capybara.default_driver = :selenium
-  #Capybara.app_host = 'http://www.google.com'
 
-  
+  # instance variables.
+  attr_accessor :web_url, :url, :user, :password, :db_name, :table_name
+
   # test to see if rspec test is working.
   def hello
     true
   end
   
-  def initalize
-    # this seems broken.
-    @url = 'https://tools.usps.com/go/ZipLookupAction!input.action'
+  def initialize(params = {})
+    @web_url = params.fetch(:web_url)
+    
+    # db credentials.
+    @url = params.fetch(:url)
+    @user = params.fetch(:user)
+    @password = params.fetch(:password)
+    @db_name= params.fetch(:db_name)
+    @table_name= params.fetch(:table_name)
+    
+    # this is broken..
+    # init db helper
+    #@db = SqlUtil.new(@url, @user, @password, @db_name)
+    # load account details.
+    @db = SqlUtil.new(:url => @url, 
+                      :user=> @user, 
+                      :password => @password, 
+                      :db_name => @db_name)
   end
   
   # runner.
+  # call this to run the scraper.
   def run
     
   end
   
   # visit main usps url
   def visit_url
-    visit 'https://tools.usps.com/go/ZipLookupAction!input.action'
+    visit @web_url #'https://tools.usps.com/go/ZipLookupAction!input.action'
     
     strs = ['Street Address']
     ScrapeUtil.has_content_and?(page, strs)
@@ -64,9 +82,19 @@ class ScrapeZip
       # the first p tag contains the city.
       result = first(:xpath, '//div[@id="result-cities"]/p')
       #result.text
+      
+      # save to db.
+      #self.save_to_db(self.city_state_as_hash(code, result.text))
+      
       self.city_state_as_hash(code, result.text)
-    end  
+    end
   end
+  
+  # saves a valid result to db.
+  # assumes you used the hashing method in the funciton.
+  #def save_to_db(city_state_hash)
+  #  @db.replace_one(@table_name, city_state_hash)
+  #end
   
   # UTILITY FUNCTIONS
   ############################################################################

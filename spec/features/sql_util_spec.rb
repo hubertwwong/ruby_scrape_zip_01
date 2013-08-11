@@ -8,11 +8,16 @@ describe SqlUtil do
   describe "test_01 db" do
     
     before(:each) do
-      user = 'root'
-      password = 'password'
-      url = 'localhost'
-      db_name = 'test01'
-      @db = SqlUtil.new(:url => url, :user=> user, :password => password, :db_name => db_name)
+      @user = 'root'
+      @password = 'password'
+      @url = 'localhost'
+      @db_name = 'test01'
+      
+      # load account details.
+      @db = SqlUtil.new(:url => @url, 
+                        :user=> @user, 
+                        :password => @password, 
+                        :db_name => @db_name)
     end
     
     describe "misc methods" do
