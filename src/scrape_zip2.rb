@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'capybara'
 require 'capybara/dsl'
+require 'headless'
 
 require_relative 'scrape_util'
 require_relative 'sql_util'
@@ -42,11 +43,16 @@ class ScrapeZip2
   ############################################################################
   
   def run
+    headless = Headless.new(display: 100, destroy_at_exit: false)
+    headless.start
+    
     # go through every zip code and search.
     99999.times do |i|
-      padded_num = sprintf '%05d', i
-      self.enter_zip_and_search(padded_num)
+      padded_num = sprintf '%05d', (i + 2458)
+      self.enter_zip_and_search(padded_num.to_s)
     end
+    
+    headless.destroy
   end
   
   def enter_zip_and_search(code)
@@ -65,7 +71,7 @@ class ScrapeZip2
     else
       # found a valid zip.
       # the first p tag contains the city.
-      result = first(:xpath, '//div[@id="result-cities"]/p')
+      result = first(:xpath, '//div[@id="result-cities"]/p[@class="std-address"]')
       
       # stores the result as a hash.
       hash_result = self.city_state_as_hash(code, result.text)
@@ -89,8 +95,14 @@ class ScrapeZip2
   # saves a valid result to db.
   # assumes you used the hashing method in the funciton.
   def save_to_db(result_hash)
+    #final_hash = result_hash
     puts @table_name
     puts result_hash.inspect
+    
+    # pad the zip.
+    #padded_num = sprintf '%05d', final_hash['ZIP']
+    #final_hash['ZIP'] = padded_num
+    
     @db.replace_one(@table_name, result_hash)
   end
   
@@ -101,6 +113,15 @@ class ScrapeZip2
   # so if the zip is 90026 and the string is 'LOS ANGELES CA'
   # it should return {'city' => 'LOS ANGELES', 'state' => 'CA', 'zip_code' => 91770}
   def city_state_as_hash(zip_code, city_state_str)
+    puts zip_code
+    puts city_state_str
+    city = /(\w+\s)+/.match(city_state_str)[0].rstrip
+    puts city
+    state = /\w\w$/.match(city_state_str)[0]
+    puts state
+    puts zip_code
+    puts 'aaaa'
+    
     result_hash = Hash.new
     
     # need rstrip to remove extra spaces on the right side.

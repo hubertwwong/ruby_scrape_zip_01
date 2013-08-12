@@ -3,10 +3,13 @@ require 'bundler/setup'
 #require 'ruby-debug'
 require 'rspec'
 require 'capybara/rspec'
+#require 'capybara-webkit'
 
 # Capybara configuration
 Capybara.default_driver = :selenium
-#Capybara.use_default_driver
+# Capybara.use_default_driver
+
+# for screenshots if you need them.
 Capybara.save_and_open_page_path = File.dirname(__FILE__) + '/../snapshots'
  
 # RSpec configuration
