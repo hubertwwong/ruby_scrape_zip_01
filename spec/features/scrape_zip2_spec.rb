@@ -69,7 +69,7 @@ describe ScrapeZip2 do
         puts 'aaaaaaaaaaaaaaa'
         # weird bug. num params should not have a zero prefix.
         # i think if you do it it picks it up as a hex number or something.
-        result = @sz2.run2(5619, 111)
+        result = @sz2.run2(5933, 111)
         result.should == true
       end
     end

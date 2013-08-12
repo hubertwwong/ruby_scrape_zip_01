@@ -64,7 +64,9 @@ class ScrapeWiki
   end
 
   # retrieves the population of the city if its found in wikipedia
+  # returns -1 if if cant find population
   def get_population(state_code, city_name)
+    pop = -1
     headless = Headless.new(display: 100, destroy_at_exit: false)
     headless.start
     
@@ -77,12 +79,44 @@ class ScrapeWiki
     # getting time out errors below
     # seems like page is broken
     # puts find(:xpath, '//table[@class="infobox geography vcard"]').inspect
-    puts page.has_text?('About Google').inspect
-    puts page.has_text?('Main page').inspect
-    puts page.has_text?('Population').inspect
-    click_link('Main page')
+    #puts page.has_text?('About Google').inspect
+    #puts page.has_text?('Main page').inspect
+    #puts page.has_text?('Population').inspect
+    #click_link('Main page')
     
+    pop_text_found = false
+    if page.has_content?('Population')
+      puts 'in pop'
+      page.all(:xpath, '//table[@class="infobox geography vcard"]//tr').each do |row|
+        puts row.text
+        
+        # want to find the population text before running  this.
+        if pop_text_found
+          puts 'found the pop....'
+          puts row.text
+          puts row.has_content?('td')
+          pop = row.find('td').text
+          
+          # remove brackets on some of the populations with annotations.
+          pop = pop.gsub(/[\[].+$/, '')
+          break
+          #row.find(",").text
+        end
+        
+        # checks for the pop header. sets a flag.
+        # the row after that contains the population
+        if row.has_content?('Population')
+          pop_text_found = true
+        end
+        
+      end
+    end
+    puts 'pop ends'
+    
+    # clean up headless
     headless.destroy
+    
+    pop
     
     # see if you have a valid page.
     # this assumes the url_create method is working correctly

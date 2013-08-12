@@ -77,9 +77,19 @@ describe ScrapeWiki do
     end
     
     describe 'get_population' do
-      it "los angeles, ca" do
+      xit "rosemead, ca" do
         result = @sw.get_population('CA', 'Rosemead')
-        result.should == true
+        result.should == "53,764"
+      end
+      
+      it "new york city, ny" do
+        result = @sw.get_population('NY', 'New York City')
+        result.should == "8,336,697"
+      end
+      
+      xit "los angeles, ca" do
+        result = @sw.get_population('CA', 'Los Angeles')
+        result.should == "3,857,799"
       end
       
       xit "bad urls... checking" do

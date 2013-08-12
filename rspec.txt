@@ -1,45 +1,6 @@
-******CALIFORNIA
+*******NEW YORK
 gets here1111
-false
-false
-true
-F*
-
-Pending:
-  ScrapeWiki URL METHODS test hello should return true
-    # Temporarily disabled with xit
-    # ./spec/features/scrape_wiki_spec.rb:26
-  ScrapeWiki URL METHODS url_suffix_create DC, LOS ANGELES
-    # Temporarily disabled with xit
-    # ./spec/features/scrape_wiki_spec.rb:32
-  ScrapeWiki URL METHODS url_suffix_create WA, SEATTLE
-    # Temporarily disabled with xit
-    # ./spec/features/scrape_wiki_spec.rb:37
-  ScrapeWiki URL METHODS url_suffix_create NY, New York City
-    # Temporarily disabled with xit
-    # ./spec/features/scrape_wiki_spec.rb:42
-  ScrapeWiki URL METHODS url_suffix_create IL, Chicago
-    # Temporarily disabled with xit
-    # ./spec/features/scrape_wiki_spec.rb:47
-  ScrapeWiki URL METHODS url_create WA, SEATTLE
-    # Temporarily disabled with xit
-    # ./spec/features/scrape_wiki_spec.rb:54
-  ScrapeWiki URL METHODS get_population bad urls... checking
-    # Temporarily disabled with xit
-    # ./spec/features/scrape_wiki_spec.rb:85
-
-Failures:
-
-  1) ScrapeWiki URL METHODS get_population los angeles, ca
-     Failure/Error: result = @sw.get_population('CA', 'Rosemead')
-     Capybara::ElementNotFound:
-       Unable to find link "Main page"
-     # ./src/scrape_wiki.rb:83:in `get_population'
-     # ./spec/features/scrape_wiki_spec.rb:81:in `block (4 levels) in <top (required)>'
-
-Finished in 2 minutes 36.9 seconds
-8 examples, 1 failure, 7 pending
-
-Failed examples:
-
-rspec ./spec/features/scrape_wiki_spec.rb:80 # ScrapeWiki URL METHODS get_population los angeles, ca
+in pop
+New York City
+— City —
+City of New York
