@@ -1,6 +1,57 @@
 *******NEW YORK
 gets here1111
-in pop
-New York City
-— City —
-City of New York
+FWASHINGTON
+F**
+
+Pending:
+  ScrapeWiki URL METHODS test hello should return true
+    # Temporarily disabled with xit
+    # ./spec/features/scrape_wiki_spec.rb:26
+  ScrapeWiki URL METHODS url_suffix_create DC, LOS ANGELES
+    # Temporarily disabled with xit
+    # ./spec/features/scrape_wiki_spec.rb:32
+  ScrapeWiki URL METHODS url_suffix_create WA, SEATTLE
+    # Temporarily disabled with xit
+    # ./spec/features/scrape_wiki_spec.rb:37
+  ScrapeWiki URL METHODS url_suffix_create NY, New York City
+    # Temporarily disabled with xit
+    # ./spec/features/scrape_wiki_spec.rb:42
+  ScrapeWiki URL METHODS url_suffix_create IL, Chicago
+    # Temporarily disabled with xit
+    # ./spec/features/scrape_wiki_spec.rb:47
+  ScrapeWiki URL METHODS url_create WA, SEATTLE
+    # Temporarily disabled with xit
+    # ./spec/features/scrape_wiki_spec.rb:54
+  ScrapeWiki URL METHODS get_population rosemead, ca
+    # Temporarily disabled with xit
+    # ./spec/features/scrape_wiki_spec.rb:80
+  ScrapeWiki URL METHODS get_population los angeles, ca
+    # Temporarily disabled with xit
+    # ./spec/features/scrape_wiki_spec.rb:95
+  ScrapeWiki URL METHODS get_population bad urls... checking
+    # Temporarily disabled with xit
+    # ./spec/features/scrape_wiki_spec.rb:100
+
+Failures:
+
+  1) ScrapeWiki URL METHODS get_population new york city, ny
+     Failure/Error: result = @sw.get_population('NY', 'New York City')
+     Net::ReadTimeout:
+       Net::ReadTimeout
+     # ./src/scrape_wiki.rb:88:in `get_population'
+     # ./spec/features/scrape_wiki_spec.rb:86:in `block (4 levels) in <top (required)>'
+
+  2) ScrapeWiki URL METHODS get_population seattle, wa
+     Failure/Error: result = @sw.get_population('WA', 'Seattle')
+     Net::ReadTimeout:
+       Net::ReadTimeout
+     # ./src/scrape_wiki.rb:75:in `get_population'
+     # ./spec/features/scrape_wiki_spec.rb:91:in `block (4 levels) in <top (required)>'
+
+Finished in 4 minutes 26.3 seconds
+11 examples, 2 failures, 9 pending
+
+Failed examples:
+
+rspec ./spec/features/scrape_wiki_spec.rb:85 # ScrapeWiki URL METHODS get_population new york city, ny
+rspec ./spec/features/scrape_wiki_spec.rb:90 # ScrapeWiki URL METHODS get_population seattle, wa

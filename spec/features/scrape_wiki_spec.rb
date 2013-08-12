@@ -87,6 +87,11 @@ describe ScrapeWiki do
         result.should == "8,336,697"
       end
       
+      it "seattle, wa" do
+        result = @sw.get_population('WA', 'Seattle')
+        result.should == "634,535"
+      end
+      
       xit "los angeles, ca" do
         result = @sw.get_population('CA', 'Los Angeles')
         result.should == "3,857,799"

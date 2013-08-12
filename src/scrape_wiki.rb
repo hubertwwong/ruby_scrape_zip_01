@@ -67,8 +67,8 @@ class ScrapeWiki
   # returns -1 if if cant find population
   def get_population(state_code, city_name)
     pop = -1
-    headless = Headless.new(display: 100, destroy_at_exit: false)
-    headless.start
+    #headless = Headless.new(display: 192, destroy_at_exit: false)
+    #headless.start
     
     wiki_url = self.url_create(state_code, city_name)
     #visit 'http://www.google.com/'
@@ -99,6 +99,7 @@ class ScrapeWiki
           
           # remove brackets on some of the populations with annotations.
           pop = pop.gsub(/[\[].+$/, '')
+          pop = pop.gsub(/[ ].+$/, '')
           break
           #row.find(",").text
         end
@@ -114,7 +115,7 @@ class ScrapeWiki
     puts 'pop ends'
     
     # clean up headless
-    headless.destroy
+    #headless.destroy
     
     pop
     
