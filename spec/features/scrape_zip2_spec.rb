@@ -58,8 +58,15 @@ describe ScrapeZip2 do
     end
     
     describe 'run' do
-      it 'valid zips returns a hash' do
+      xit 'valid zips returns a hash' do
         result = @sz2.run
+        result.should == true
+      end
+    end
+    
+    describe 'run2' do
+      it 'valid zips returns a hash' do
+        result = @sz2.run2(3077, 111)
         result.should == true
       end
     end
