@@ -2,13 +2,18 @@ require File.dirname(__FILE__) + '/../spec_helper'
 require_relative '../../src/state_util'
 
 describe StateUtil do
-  it "foo returns bar" do
-    result = StateUtil.abbv_to_state('foo')
-    result.should == 'bar'
+  it "CA returns CALIFORNIA" do
+    result = StateUtil.abbv_to_state('CA')
+    result.should == 'CALIFORNIA'
+  end
+  
+  it "MP returns NORTHERN MARIANA ISLANDS" do
+    result = StateUtil.abbv_to_state('MP')
+    result.should == 'NORTHERN MARIANA ISLANDS'
   end
   
   it "zzzzz returns false" do
     result = StateUtil.abbv_to_state('zzzzz')
-    result.should == false
+    result.should == nil
   end
 end

@@ -21,8 +21,14 @@ class ScrapeZip2
   def initialize(params = {})
     #Capybara.default_driver = :selenium
     #Capybara.default_driver = :rack_test
-    Capybara.javascript_driver = :webkit
+    #Capybara.javascript_driver = :webkit
     
+    # allows it to run as a pure ruby app.
+    Capybara.run_server = false
+    
+    # use selenium driver.
+    Capybara.current_driver = :selenium
+
     @web_url = params.fetch(:web_url)
 
     # db credentials.
@@ -48,7 +54,22 @@ class ScrapeZip2
     
     # go through every zip code and search.
     99999.times do |i|
-      padded_num = sprintf '%05d', (i + 2458)
+      padded_num = sprintf '%05d', (i + 2780)
+      self.enter_zip_and_search(padded_num.to_s)
+    end
+    
+    headless.destroy
+  end
+  
+  # runner that allows you to specify a different display.
+  # and different zip offset.
+  def run2(offset, display_no)
+    headless = Headless.new(display: display_no, destroy_at_exit: false)
+    headless.start
+    
+    # go through every zip code and search.
+    99999.times do |i|
+      padded_num = sprintf '%05d', (i + offset)
       self.enter_zip_and_search(padded_num.to_s)
     end
     
