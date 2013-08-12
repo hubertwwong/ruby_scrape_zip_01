@@ -70,6 +70,7 @@ class ScrapeZip2
     # go through every zip code and search.
     99999.times do |i|
       padded_num = sprintf '%05d', (i + offset)
+      puts padded_num.to_s + " " + offset.to_s
       self.enter_zip_and_search(padded_num.to_s)
     end
     

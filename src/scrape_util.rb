@@ -26,7 +26,7 @@ class ScrapeUtil
       
       # break out of the loop if the page is true.
       # you only care if one item on the page.
-      if valid_page
+      if valid_page == true
         break
       end
     end

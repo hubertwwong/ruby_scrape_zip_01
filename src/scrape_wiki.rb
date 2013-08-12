@@ -24,6 +24,14 @@ class ScrapeWiki
     #Capybara.default_driver = :rack_test
     #Capybara.javascript_driver = :webkit
     
+    # getting weird time out errors. wonder if this will help
+    #Capybara.register_driver :selenium_with_long_timeout do |app|
+    #  client = Selenium::WebDriver::Remote::Http::Default.new
+    #  client.timeout = 120
+    #  Capybara::Driver::Selenium.new(app, :browser => :firefox, :http_client => client)
+    #end
+    #Capybara.javascript_driver = :selenium_with_long_timeout
+    
     # db credentials.
     @url = params.fetch(:url)
     @user = params.fetch(:user)
@@ -42,16 +50,7 @@ class ScrapeWiki
   ############################################################################
  
   def run
-    #headless = Headless.new(display: 100, destroy_at_exit: false)
-    #headless.start
     
-    # go through every zip code and search.
-    #99999.times do |i|
-    #  padded_num = sprintf '%05d', (i + 2458)
-    #  self.enter_zip_and_search(padded_num.to_s)
-    #end
-    
-    #headless.destroy
   end
   
   # saves a valid result to db.
@@ -64,6 +63,58 @@ class ScrapeWiki
     @db.replace_one(@table_name, result_hash)
   end
 
+  # retrieves the population of the city if its found in wikipedia
+  def get_population(state_code, city_name)
+    headless = Headless.new(display: 100, destroy_at_exit: false)
+    headless.start
+    
+    wiki_url = self.url_create(state_code, city_name)
+    #visit 'http://www.google.com/'
+    visit wiki_url
+    puts 'gets here1111'
+    
+    # testing elements.
+    # getting time out errors below
+    # seems like page is broken
+    # puts find(:xpath, '//table[@class="infobox geography vcard"]').inspect
+    puts page.has_text?('About Google').inspect
+    puts page.has_text?('Main page').inspect
+    puts page.has_text?('Population').inspect
+    click_link('Main page')
+    
+    headless.destroy
+    
+    # see if you have a valid page.
+    # this assumes the url_create method is working correctly
+    # result = first(:xpath, '//div[@id="result-cities"]/p[@class="std-address"]')
+    #error_strs = ['Wikipedia does not have an article with this exact name.']
+    
+    #if ScrapeUtil.has_content_or?(page, error_strs)
+    #if page.has_content? 'Wikipedia does not have an article with this exact name.'
+      #puts "empty page"
+      #false
+    #else
+      #puts "gets here1"
+      # checks to see if has the word population
+      # chances are if it doesn't have the word, the page does not contain it.
+      #city_strs = ['Population']
+      #if ScrapeUtil.has_content_or?(page, city_strs)
+        #puts "gets here"
+        #within('//table[@class="infobox geography vcard"') do
+          # there is a tr/th with the word population. this is probably
+          # a good jumping off point.
+          # the actual population is on the next row.
+          #all('tr').each do |row|
+          #  puts row
+          #end
+        #end
+        
+        #true
+      #else
+        #false
+      #end
+    #end
+  end
   
   # UTIL FUNCTIONS
   ############################################################################
@@ -72,7 +123,7 @@ class ScrapeWiki
   # should give you a valid city url if it exist.
   # assumes its in english. 
   def url_create(state_code, city_name)
-    'http://en.wikipedia.org/wiki/' + self.url_suffix_create(state_code, city_name)
+    'http://en.m.wikipedia.org/wiki/' + self.url_suffix_create(state_code, city_name)
   end
   
   # create the stuffix for city and sttate.
