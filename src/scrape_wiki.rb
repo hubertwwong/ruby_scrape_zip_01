@@ -92,7 +92,6 @@ class ScrapeWiki
         
         # want to find the population text before running  this.
         if pop_text_found
-          puts 'found the pop....'
           puts row.text
           puts row.has_content?('td')
           pop = row.find('td').text

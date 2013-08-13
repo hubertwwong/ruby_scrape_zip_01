@@ -6,7 +6,6 @@ require 'rubygems'
 describe SqlUtil do
   
   describe "test_01 db" do
-    
     before(:each) do
       @user = 'root'
       @password = 'password'
@@ -95,6 +94,32 @@ describe SqlUtil do
           result = @db.replace_one('car', vals)
           result.should == true
         end
+      end
+    end
+  end
+  
+  describe 'ZIP POP database' do
+    before(:each) do
+      @user = 'root'
+      @password = 'password'
+      @url = 'localhost'
+      @db_name = 'test01'
+      @table_name = 'ZIP_POP'
+      
+      # load account details.
+      @db = SqlUtil.new(:url => @url, 
+                        :user=> @user, 
+                        :password => @password, 
+                        :db_name => @db_name)
+    end
+    describe 'read_all_one_param_order_by' do
+      it 'returns a lot of rows' do
+        result = @db.read_all_one_param_order_by(@table_name, 'population', '0', 'CITY')
+        result.length.should > 0
+        
+        # testing first item
+        first_item = result[0]
+        first_item.should == 0
       end
     end
   end

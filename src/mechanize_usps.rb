@@ -41,7 +41,6 @@ class MechanizeUsps
     offset.upto(99999) do |i|
       puts 'on ' + i.to_s
       self.find_and_save_zip(i)
-      
       sleep sleep_time
     end
   end
@@ -62,10 +61,14 @@ class MechanizeUsps
   
   # finds a city and state code from a db.
   def find_city_and_state(zip)
+      
     puts 'finding ' + zip.to_s
     
     # stores result
     result = nil
+    
+    # need to pad zeros in front of the zip 
+    padded_zip = sprintf '%05d', (zip)
     
     # load the user agent.
     a = Mechanize.new { |agent|
@@ -73,7 +76,7 @@ class MechanizeUsps
     }
     
     # convert url to the zip
-    actual_url = self.replace_zip_in_url(zip)
+    actual_url = self.replace_zip_in_url(padded_zip)
     
     # go to page and fetch the string.
     a.get(actual_url) do |p|
@@ -86,8 +89,8 @@ class MechanizeUsps
         # you basically want the first result.
         # so break after you grab it.
         p.search('//div[@id="result-cities"]/p[@class="std-address"]').each do |addr|
-          city_state_str = self.city_state_as_hash(zip, addr.text)
-          puts city_state_str.inspect
+          city_state_str = self.city_state_as_hash(padded_zip, addr.text)
+          #puts city_state_str.inspect
           result = city_state_str
           break
         end
@@ -115,7 +118,8 @@ class MechanizeUsps
   # assumes you used the hashing method in the funciton.
   def save_to_db(result_hash)
     #final_hash = result_hash
-    puts @table_name
+    #puts @table_name
+    puts "saving"
     puts result_hash.inspect
     
     # pad the zip.
