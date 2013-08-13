@@ -78,7 +78,9 @@ class MechanizeWiki
       # go to page and fetch the population.
       a.get(actual_url) do |p|
         # check if city card to the right is there.
-        city_geocard = p.search('//table[@class="infobox geography vcard"]//tr')
+        #city_geocard = p.search('//table[@class="infobox geography vcard"]//tr')
+        city_geocard = p.search('//table//tr')
+        # albany ny. has a weird class name. can't assume its consistent.
         
         # pop flag to spot the word population
         pop_flag = false
@@ -87,11 +89,13 @@ class MechanizeWiki
         if city_geocard.length > 0
           # cycle thru each row of the geo card on the left side
           city_geocard.each do |row|
+            #puts "> " + row.text
+            
             if pop_flag == true
               #puts 'aaaa'
               #puts row.text
               #puts 'aaaa'
-              puts row.search('td').text
+              #puts row.search('td').text
               #puts 'aaaa'
               #puts row.search('th').text
               #puts row.text
@@ -103,8 +107,21 @@ class MechanizeWiki
               break
             end
             
+            # population number starts after this marker..
+            # there are some cases where the population is on the same row.
+            # see Albany, NY page
             if row.text.include? 'Population'
-              puts ">>>>"  + row.text
+              #puts ">>>>"  + row.text
+              #puts row.search('td').text.inspect
+              #puts ">>>>"
+              
+              # checks for a non td. albany has the pop on this line.
+              # most other cities have it on the next line.
+              unless row.search('td').text == ""
+                result = self.pop_clean(row.search('td').text)
+                break
+              end
+              
               pop_flag = true
             end
             #if pop_text_flag == true
@@ -118,6 +135,7 @@ class MechanizeWiki
       puts e
     end
     
+    puts "pop " + result.to_s
     result
   end
 
@@ -135,7 +153,7 @@ class MechanizeWiki
   # there is an additional underscrore that prefix the state.
   def url_suffix_create(state_code, city_name)
     # fetch state.
-    state_name_full = StateUtil.abbv_to_state state_code
+    state_name_full = StateUtil.abbv_to_state(state_code)
     
     # transform the state name.
     # there might be an issue with caps of non proper nouns.
@@ -160,7 +178,9 @@ class MechanizeWiki
   # should give you a valid city url if it exist.
   # assumes its in english. 
   def url_create(state_code, city_name)
-    @web_url + self.url_suffix_create(state_code, city_name)
+    final_url = @web_url + self.url_suffix_create(state_code, city_name)
+    puts final_url
+    final_url
   end
 
   # UTILITY methods
@@ -169,10 +189,15 @@ class MechanizeWiki
   # pop cleaner
   # a utility method to clean the population number that gets scraped
   # some has suffixes which might mean an annotation but is not included.
+  #
+  # changed this so it only takes comma seperated values.
+  # populations seems to come only in this format.
+  # 3,123,232 or 2,132
   def pop_clean(dirty_pop_text)
-    pop = dirty_pop_text.gsub(/[ \[].+$/, '')
-    pop = pop.gsub(/[ ].+$/ , '')
-    pop = pop.gsub(/[\(].+$/ , '')
+    pop = /^(?:\d{1,3}(?:[,]\d{3})*|\d+)/.match(dirty_pop_text).to_s
+    #pop = dirty_pop_text.gsub(/[ \[].+$/, '')
+    #pop = pop.gsub(/[ ].+$/ , '')
+    #pop = pop.gsub(/[\(].+$/ , '')
     pop
   end
   

@@ -2,6 +2,7 @@ require 'rubygems'
 require 'mechanize'
 
 require_relative 'sql_util'
+require_relative 'yaml_util'
 
 class MechanizeUsps
   
@@ -23,6 +24,10 @@ class MechanizeUsps
     # basically, you just need to change the zip code.
     @web_url = 'https://tools.usps.com/go/ZipLookupResultsAction!input.action?resultMode=2&companyName=&address1=&address2=&city=&state=Select&urbanCode=&postalCode=00000&zip='
 
+    # reading a config file.
+    #@config_filename = 'config/usps_progress.yml'
+    #@prefs = YamlUtil.read(@config_filename)
+    #puts @prefs.inspect
     
     # init db helper
     @db = SqlUtil.new(:url => @url, 
@@ -36,12 +41,19 @@ class MechanizeUsps
   
   # loops through the main method and stores the result into the db.
   # has an offset argument that can be used to scrape in parallel.
-  def run(offset, sleep_time)
+  def run(offset, timeout)
     puts 'offset ' + offset.to_s
     offset.upto(99999) do |i|
       puts 'on ' + i.to_s
       self.find_and_save_zip(i)
-      sleep sleep_time
+      
+      # update position.
+      #@prefs.store("cur_pos", i)
+      #puts @prefs.inspect
+      #YamlUtil.write(@config_filename, @prefs)
+      
+      # sleep
+      sleep timeout
     end
   end
   

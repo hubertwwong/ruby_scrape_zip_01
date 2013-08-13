@@ -1,0 +1,36 @@
+.DISTRICT OF COLUMBIA
+.WASHINGTON
+.NEW YORK
+.ILLINOIS
+.WASHINGTON
+http://en.m.wikipedia.org/wiki/Seattle,_Washington
+.finding pop of Rosemead, CA
+CALIFORNIA
+http://en.m.wikipedia.org/wiki/Rosemead,_California
+.finding pop of New York City, NY
+NEW YORK
+http://en.m.wikipedia.org/wiki/New_York_City,_New_York
+.finding pop of Seattle, WA
+WASHINGTON
+http://en.m.wikipedia.org/wiki/Seattle,_Washington
+.**finding pop of Albany, NY
+NEW YORK
+http://en.m.wikipedia.org/wiki/Albany,_New_York
+.**
+
+Pending:
+  MechanizeWiki main methods get_population los angeles, ca
+    # Temporarily disabled with xit
+    # ./spec/features/mechanize_wiki_spec.rb:78
+  MechanizeWiki main methods get_population seattle, wa
+    # Temporarily disabled with xit
+    # ./spec/features/mechanize_wiki_spec.rb:83
+  MechanizeWiki main methods get_population bad urls... checking
+    # Temporarily disabled with xit
+    # ./spec/features/mechanize_wiki_spec.rb:94
+  MechanizeWiki main methods run get all the population
+    # Temporarily disabled with xit
+    # ./spec/features/mechanize_wiki_spec.rb:101
+
+Finished in 5.07 seconds
+14 examples, 0 failures, 4 pending

@@ -63,7 +63,14 @@ class StateUtil
     state_name['WV'] = 'WEST VIRGINIA'
     state_name['WI'] = 'WISCONSIN'
     state_name['WY'] = 'WYOMING'
-    # not putting the state.
+    
+    # military states are being used.
+    # there are more...
+    # with the same initals.
+    # https://www.usps.com/send/official-abbreviations.htm
+    state_name['AE'] = 'Armed Forces Europe'
+    state_name['AA'] = 'Armed Forces Americas (except Canada)'
+    state_name['AP'] = 'Armed Forces Pacific'
       
     # return the state name.
     puts state_name[abbv]

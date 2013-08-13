@@ -146,7 +146,7 @@ describe MechanizeUsps do
     # main runner..
     describe 'runner' do
       it 'should complete' do
-        result = @mu.run(8320, 10)
+        result = @mu.run(13390, 3)
       end
     end
   end

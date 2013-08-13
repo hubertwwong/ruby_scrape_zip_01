@@ -84,6 +84,12 @@ describe MechanizeWiki do
         result = @mw.get_population('WA', 'Seattle')
         result.should == "634,535"
       end
+
+      xit "albany, NY" do
+        result = @mw.get_population('NY', 'Albany')
+        result.should == "97,856"
+      end
+
       
       xit "bad urls... checking" do
         result = @mw.get_population('CA', "Chicago")

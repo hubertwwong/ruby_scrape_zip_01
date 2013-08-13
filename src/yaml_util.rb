@@ -2,6 +2,7 @@
 class YamlUtil
   
   def self.read(filename)
+    puts filename
     YAML.load_file(filename)
   end
   
