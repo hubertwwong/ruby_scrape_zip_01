@@ -1,57 +1,29 @@
-*******NEW YORK
-gets here1111
-FWASHINGTON
-F**
-
-Pending:
-  ScrapeWiki URL METHODS test hello should return true
-    # Temporarily disabled with xit
-    # ./spec/features/scrape_wiki_spec.rb:26
-  ScrapeWiki URL METHODS url_suffix_create DC, LOS ANGELES
-    # Temporarily disabled with xit
-    # ./spec/features/scrape_wiki_spec.rb:32
-  ScrapeWiki URL METHODS url_suffix_create WA, SEATTLE
-    # Temporarily disabled with xit
-    # ./spec/features/scrape_wiki_spec.rb:37
-  ScrapeWiki URL METHODS url_suffix_create NY, New York City
-    # Temporarily disabled with xit
-    # ./spec/features/scrape_wiki_spec.rb:42
-  ScrapeWiki URL METHODS url_suffix_create IL, Chicago
-    # Temporarily disabled with xit
-    # ./spec/features/scrape_wiki_spec.rb:47
-  ScrapeWiki URL METHODS url_create WA, SEATTLE
-    # Temporarily disabled with xit
-    # ./spec/features/scrape_wiki_spec.rb:54
-  ScrapeWiki URL METHODS get_population rosemead, ca
-    # Temporarily disabled with xit
-    # ./spec/features/scrape_wiki_spec.rb:80
-  ScrapeWiki URL METHODS get_population los angeles, ca
-    # Temporarily disabled with xit
-    # ./spec/features/scrape_wiki_spec.rb:95
-  ScrapeWiki URL METHODS get_population bad urls... checking
-    # Temporarily disabled with xit
-    # ./spec/features/scrape_wiki_spec.rb:100
+....on 0
+on 1
+on 2
+on 3
+on 4
+on 5
+on 6
+F
 
 Failures:
 
-  1) ScrapeWiki URL METHODS get_population new york city, ny
-     Failure/Error: result = @sw.get_population('NY', 'New York City')
-     Net::ReadTimeout:
-       Net::ReadTimeout
-     # ./src/scrape_wiki.rb:88:in `get_population'
-     # ./spec/features/scrape_wiki_spec.rb:86:in `block (4 levels) in <top (required)>'
+  1) MechanizeUsps main methods runner should complete
+     Failure/Error: result = @mu.run(00000)
+     NoMethodError:
+       undefined method `[]' for nil:NilClass
+     # ./src/mechanize_usps.rb:118:in `city_state_as_hash'
+     # ./src/mechanize_usps.rb:76:in `block in find_city_and_state'
+     # ./src/mechanize_usps.rb:68:in `find_city_and_state'
+     # ./src/mechanize_usps.rb:44:in `block in run'
+     # ./src/mechanize_usps.rb:40:in `upto'
+     # ./src/mechanize_usps.rb:40:in `run'
+     # ./spec/features/mechanize_usps_spec.rb:107:in `block (4 levels) in <top (required)>'
 
-  2) ScrapeWiki URL METHODS get_population seattle, wa
-     Failure/Error: result = @sw.get_population('WA', 'Seattle')
-     Net::ReadTimeout:
-       Net::ReadTimeout
-     # ./src/scrape_wiki.rb:75:in `get_population'
-     # ./spec/features/scrape_wiki_spec.rb:91:in `block (4 levels) in <top (required)>'
-
-Finished in 4 minutes 26.3 seconds
-11 examples, 2 failures, 9 pending
+Finished in 3.89 seconds
+5 examples, 1 failure
 
 Failed examples:
 
-rspec ./spec/features/scrape_wiki_spec.rb:85 # ScrapeWiki URL METHODS get_population new york city, ny
-rspec ./spec/features/scrape_wiki_spec.rb:90 # ScrapeWiki URL METHODS get_population seattle, wa
+rspec ./spec/features/mechanize_usps_spec.rb:106 # MechanizeUsps main methods runner should complete
