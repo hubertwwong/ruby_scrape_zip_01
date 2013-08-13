@@ -10,6 +10,9 @@ class MechanizeUsps
   attr_accessor :url, :user, :password, :db_name, :table_name, :web_url, :user_agent
   
   def initialize(params = {})
+    # load the yaml file.
+    @prefs = YamlUtil.read(@config_filename)
+    
     # db credentials.
     @url = params.fetch(:url)
     @user = params.fetch(:user)
@@ -40,8 +43,6 @@ class MechanizeUsps
   # loops through the main method and stores the result into the db.
   # using the yaml file instead.
   def run_yaml
-    # load the yaml file.
-    @prefs = YamlUtil.read(@config_filename)
     #puts @prefs.inspect
     cur_offset = @prefs['cur_pos']
     cur_timeout = @prefs['timeout']
