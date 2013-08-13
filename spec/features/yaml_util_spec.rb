@@ -27,7 +27,8 @@ describe YamlUtil do
       cur_yml = YamlUtil.read(@filename)
       cur_yml.store('cur_pos', 123)
       puts cur_yml.inspect
-      result = YamlUtil.write(@filename, result)
+      result = YamlUtil.write(@filename, cur_yml)
+      
       result.should_not be_nil
     end
   end
