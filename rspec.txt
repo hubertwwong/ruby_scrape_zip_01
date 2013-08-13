@@ -1,29 +1,4 @@
-....on 0
-on 1
-on 2
-on 3
-on 4
-on 5
-on 6
-F
 
-Failures:
 
-  1) MechanizeUsps main methods runner should complete
-     Failure/Error: result = @mu.run(00000)
-     NoMethodError:
-       undefined method `[]' for nil:NilClass
-     # ./src/mechanize_usps.rb:118:in `city_state_as_hash'
-     # ./src/mechanize_usps.rb:76:in `block in find_city_and_state'
-     # ./src/mechanize_usps.rb:68:in `find_city_and_state'
-     # ./src/mechanize_usps.rb:44:in `block in run'
-     # ./src/mechanize_usps.rb:40:in `upto'
-     # ./src/mechanize_usps.rb:40:in `run'
-     # ./spec/features/mechanize_usps_spec.rb:107:in `block (4 levels) in <top (required)>'
-
-Finished in 3.89 seconds
-5 examples, 1 failure
-
-Failed examples:
-
-rspec ./spec/features/mechanize_usps_spec.rb:106 # MechanizeUsps main methods runner should complete
+Finished in 0.00009 seconds
+0 examples, 0 failures

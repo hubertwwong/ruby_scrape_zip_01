@@ -108,6 +108,11 @@ describe MechanizeUsps do
           result = @mu.find_and_save_zip(90211)
           result.should == true
         end
+        
+        xit '60001' do
+          result = @mu.find_and_save_zip(60001)
+          result.should == true
+        end
       end
       
       context 'invalid results' do
@@ -141,7 +146,7 @@ describe MechanizeUsps do
     # main runner..
     describe 'runner' do
       it 'should complete' do
-        result = @mu.run(60000, 10)
+        result = @mu.run(0, 3)
       end
     end
   end

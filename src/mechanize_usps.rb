@@ -87,7 +87,8 @@ class MechanizeUsps
         # so break after you grab it.
         p.search('//div[@id="result-cities"]/p[@class="std-address"]').each do |addr|
           city_state_str = self.city_state_as_hash(zip, addr.text)
-          result = self.city_state_as_hash(zip, city_state_str)
+          puts city_state_str.inspect
+          result = city_state_str
           break
         end
       else
