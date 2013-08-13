@@ -4,33 +4,60 @@
 .ILLINOIS
 .WASHINGTON
 http://en.m.wikipedia.org/wiki/Seattle,_Washington
-.finding pop of Rosemead, CA
+.*******finding pop of Los Angeles, CA
 CALIFORNIA
-http://en.m.wikipedia.org/wiki/Rosemead,_California
-.finding pop of New York City, NY
-NEW YORK
-http://en.m.wikipedia.org/wiki/New_York_City,_New_York
-.finding pop of Seattle, WA
-WASHINGTON
-http://en.m.wikipedia.org/wiki/Seattle,_Washington
-.**finding pop of Albany, NY
-NEW YORK
-http://en.m.wikipedia.org/wiki/Albany,_New_York
-.**
+http://en.m.wikipedia.org/wiki/Los_Angeles,_California
+pop 3,857,799
+> 3,857,799
+> 3857799
+> saving
+{"ZIP"=>90026, "CITY"=>"LOS ANGELES", "STATE"=>"CA", "POPULATION"=>"3857799"}
+F*
 
 Pending:
+  MechanizeWiki main methods get_population rosemead, ca
+    # Temporarily disabled with xit
+    # ./spec/features/mechanize_wiki_spec.rb:63
+  MechanizeWiki main methods get_population new york city, ny
+    # Temporarily disabled with xit
+    # ./spec/features/mechanize_wiki_spec.rb:68
+  MechanizeWiki main methods get_population seattle, wa
+    # Temporarily disabled with xit
+    # ./spec/features/mechanize_wiki_spec.rb:73
   MechanizeWiki main methods get_population los angeles, ca
     # Temporarily disabled with xit
     # ./spec/features/mechanize_wiki_spec.rb:78
   MechanizeWiki main methods get_population seattle, wa
     # Temporarily disabled with xit
     # ./spec/features/mechanize_wiki_spec.rb:83
+  MechanizeWiki main methods get_population albany, NY
+    # Temporarily disabled with xit
+    # ./spec/features/mechanize_wiki_spec.rb:88
   MechanizeWiki main methods get_population bad urls... checking
     # Temporarily disabled with xit
     # ./spec/features/mechanize_wiki_spec.rb:94
   MechanizeWiki main methods run get all the population
     # Temporarily disabled with xit
-    # ./spec/features/mechanize_wiki_spec.rb:101
+    # ./spec/features/mechanize_wiki_spec.rb:120
 
-Finished in 5.07 seconds
-14 examples, 0 failures, 4 pending
+Failures:
+
+  1) MechanizeWiki main methods get pop. saving test los angeles, ca
+     Failure/Error: result.should == "3,857,799"
+       expected: "3,857,799"
+            got: {"ZIP"=>90026, "CITY"=>"LOS ANGELES", "STATE"=>"CA", "POPULATION"=>"3857799"} (using ==)
+       Diff:
+       @@ -1,2 +1,5 @@
+       -"3,857,799"
+       +"CITY" => "LOS ANGELES",
+       +"POPULATION" => "3857799",
+       +"STATE" => "CA",
+       +"ZIP" => 90026
+     # ./spec/features/mechanize_wiki_spec.rb:115:in `block (4 levels) in <top (required)>'
+
+Finished in 1.52 seconds
+15 examples, 1 failure, 8 pending
+
+Failed examples:
+
+rspec ./spec/features/mechanize_wiki_spec.rb:101 # MechanizeWiki main methods get pop. saving test los angeles, ca

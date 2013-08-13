@@ -196,6 +196,9 @@ class MechanizeWiki
   # 3,123,232 or 2,132
   def pop_clean(dirty_pop_text)
     pop = /^(?:\d{1,3}(?:[,]\d{3})*|\d+)/.match(dirty_pop_text).to_s
+    pop = pop.gsub(',','')
+    # remove the commas
+    
     #pop = dirty_pop_text.gsub(/[ \[].+$/, '')
     #pop = pop.gsub(/[ ].+$/ , '')
     #pop = pop.gsub(/[\(].+$/ , '')
@@ -206,9 +209,10 @@ class MechanizeWiki
   # assumes you used the hashing method in the funciton.
   def save_to_db(result_hash)
     #final_hash = result_hash
-    #puts @table_name
-    puts "saving"
-    puts result_hash.inspect
+    # strip out commas in population.
+    #final_hash["POPULATION"] = final_hash["POPULATION"].gsub(",", '')
+    #puts "> saving"
+    #puts final_hash.inspect
     
     # pad the zip.
     #padded_num = sprintf '%05d', final_hash['ZIP']

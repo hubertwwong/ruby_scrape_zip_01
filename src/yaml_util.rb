@@ -11,7 +11,9 @@ class YamlUtil
   # so cur_hash.store('foo', 100)
   # and then call this function to save it
   def self.write(filename, cur_hash)
-    File.open(filename, "w") {|f| f.write(cur_hash.to_yaml) }
+    File.open(filename, "w") do |f|
+      f.write(cur_hash.to_yaml)
+    end
   end
   
 end

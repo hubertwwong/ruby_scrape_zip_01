@@ -97,6 +97,25 @@ describe MechanizeWiki do
       end
     end
     
+    describe 'get pop. saving test' do
+      xit "los angeles, ca" do
+        pop = @mw.get_population('CA', 'Los Angeles')
+        
+        # construct result hash.
+        puts '> ' + pop
+        puts '> ' + pop.gsub(",", '')
+        
+        result = Hash.new
+        result['ZIP'] = 90026
+        result['CITY'] = 'LOS ANGELES'
+        result['STATE'] = 'CA'
+        result['POPULATION'] = pop
+        
+        @mw.save_to_db(result)
+        result.should == "3,857,799"
+      end
+    end
+    
     describe 'run' do
       it "get all the population" do
         result = @mw.run(10)
