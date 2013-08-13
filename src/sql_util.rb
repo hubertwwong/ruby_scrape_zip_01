@@ -45,6 +45,26 @@ class SqlUtil
   # READ METHODS
   ############################################################################
   
+  # read all order by
+  def read_all_order_by(table_name, order_name)
+    result = []
+    begin
+      con = Mysql.new(@url, @user, @password, @db_name)
+      rs = con.query("SELECT * FROM " + table_name + " ORDER BY " + order_name)
+      n_rows = rs.num_rows
+      n_rows.times do
+        cur_row = rs.fetch_row
+        result.push(self.hash_arrays(self.read_col_names(table_name), cur_row))
+      end
+        
+      result
+    rescue Mysql::Error => e
+      self.print_error e
+    ensure
+      con.close if con
+    end
+  end
+  
   # read all
   # take a a where param and a order param
   def read_all_one_param_order_by(table_name, col_name, col_val, order_name)

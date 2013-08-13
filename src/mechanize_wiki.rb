@@ -11,16 +11,31 @@ class MechanizeWiki
   # instance variables for the db.
   attr_accessor :url, :user, :password, :db_name, :table_name, :web_url, :user_agent
   
-  def initialize(params = {})
+  def initialize#(params = {})
+    # reading a config file.
+    @config_filename = 'config/wiki_progress.yml'
+   
+    # load the yaml file.
+    @prefs = YamlUtil.read(@config_filename)
+    
     # db credentials.
-    @url = params.fetch(:url)
-    @user = params.fetch(:user)
-    @password = params.fetch(:password)
-    @db_name= params.fetch(:db_name)
-    @table_name= params.fetch(:table_name)
+    #@url = params.fetch(:url)
+    #@user = params.fetch(:user)
+    #@password = params.fetch(:password)
+    #@db_name= params.fetch(:db_name)
+    #@table_name= params.fetch(:table_name)
+    
+    # yaml read test....
+    @user = @prefs['db_user']
+    @password = @prefs['db_password']
+    @url = @prefs['db_url']
+    @db_name = @prefs['db_name']
+    @table_name = @prefs['db_table_name']
+    @timeout = @prefs['timeout']
     
     # UA. wikipedia is picky on the UA.
-    @user_agent = "'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-us) AppleWebKit/533.17.8 (KHTML, like Gecko) Version/5.0.1 Safari/533.17.8' );"
+    #@user_agent = "'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-us) AppleWebKit/533.17.8 (KHTML, like Gecko) Version/5.0.1 Safari/533.17.8' );"
+    @user_agent = @prefs['user_agent']
     
     # using wikipedia mobile url.
     # seems to be faster.
@@ -35,6 +50,37 @@ class MechanizeWiki
 
   # Main methods
   ############################################################################
+  
+  def run_yaml
+    cities_all = @db.read_all_order_by(@table_name, 'ZIP')
+    cur_pos = @prefs['cur_pos']
+    # current position. pulled from yaml file.
+    
+    # go through each city.
+    cities_all.each do |cur_city|
+      # check if your at the offset.
+      # that is specified at the config file before you start.
+      if cur_city['ZIP'].to_i >= cur_pos
+        puts 'on ' + cur_city['CITY'] + ', ' + cur_city['STATE'] + ' - ' + cur_city['ZIP'] 
+        cur_pop = self.get_population(cur_city['STATE'], cur_city['CITY'])
+        puts 'pop ' + cur_pop
+      
+        # check if the population is larger than zero
+        if cur_pop.to_i > 0  
+          cur_city_new_pop = cur_city
+          cur_city_new_pop['POPULATION'] = cur_pop
+          self.save_to_db(cur_city_new_pop)
+          
+          # update the position.
+          @prefs.store('cur_pos', cur_city['ZIP'])
+          YamlUtil.write(@config_filename.to_s, @prefs)
+        end
+      end
+      
+      # add a lag so you don't spam wikipdia
+      sleep @timeout
+    end
+  end
   
   # run. this will try to fetch the population of every city in Murica
   # basically goes to the db. grabs a list of population 0

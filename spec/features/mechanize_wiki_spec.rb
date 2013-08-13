@@ -6,22 +6,23 @@ require_relative '../../src/mechanize_wiki'
 describe MechanizeWiki do
   before(:each) do
     # db credentials
-    @user = 'root'
-    @password = 'password'
-    @url = 'localhost'
-    @db_name = 'test01'
-    @table_name = 'ZIP_POP'
+    #@user = 'root'
+    #@password = 'password'
+    #@url = 'localhost'
+    #@db_name = 'test01'
+    #@table_name = 'ZIP_POP'
   
     # init the scraper
-    @mw = MechanizeWiki.new(:url => @url, 
-                       :user=> @user, 
-                       :password => @password, 
-                       :db_name => @db_name,
-                       :table_name => @table_name)
+    #@mw = MechanizeWiki.new(:url => @url, 
+    #                   :user=> @user, 
+    #                   :password => @password, 
+    #                   :db_name => @db_name,
+    #                   :table_name => @table_name)
+    @mw = MechanizeWiki.new
   end
   
   describe 'test' do
-    it 'hello should return true' do
+    xit 'hello should return true' do
       a = @mw.hello
       a.should == true
     end
@@ -117,8 +118,15 @@ describe MechanizeWiki do
     end
     
     describe 'run' do
-      it "get all the population" do
+      xit "get all the population" do
         result = @mw.run(10)
+        result.should == true
+      end
+    end
+    
+    describe 'run_yaml' do
+      it "get all the population" do
+        result = @mw.run_yaml
         result.should == true
       end
     end
