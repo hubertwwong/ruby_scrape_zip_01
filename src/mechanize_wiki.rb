@@ -53,14 +53,14 @@ class MechanizeWiki
   
   def run_yaml
     cities_all = @db.read_all_order_by(@table_name, 'ZIP')
-    cur_pos = @prefs['cur_pos']
+    cur_pos = @prefs['cur_pos'].to_i
     # current position. pulled from yaml file.
     
     # go through each city.
     cities_all.each do |cur_city|
       # check if your at the offset.
       # that is specified at the config file before you start.
-      if cur_city['ZIP'].to_i >= cur_pos
+      if cur_city['ZIP'].to_i >= cur_pos.to_i
         puts 'on ' + cur_city['CITY'] + ', ' + cur_city['STATE'] + ' - ' + cur_city['ZIP'] 
         cur_pop = self.get_population(cur_city['STATE'], cur_city['CITY'])
         puts 'pop ' + cur_pop
@@ -72,7 +72,7 @@ class MechanizeWiki
           self.save_to_db(cur_city_new_pop)
           
           # update the position.
-          @prefs.store('cur_pos', cur_city['ZIP'])
+          @prefs.store('cur_pos', cur_city['ZIP'].to_i)
           YamlUtil.write(@config_filename.to_s, @prefs)
         end
       end
