@@ -10,6 +10,9 @@ class MechanizeUsps
   attr_accessor :url, :user, :password, :db_name, :table_name, :web_url, :user_agent
   
   def initialize(params = {})
+    # reading a config file.
+    @config_filename = 'config/usps_progress.yml'
+   
     # load the yaml file.
     @prefs = YamlUtil.read(@config_filename)
     
@@ -27,9 +30,7 @@ class MechanizeUsps
     # basically, you just need to change the zip code.
     @web_url = 'https://tools.usps.com/go/ZipLookupResultsAction!input.action?resultMode=2&companyName=&address1=&address2=&city=&state=Select&urbanCode=&postalCode=00000&zip='
 
-    # reading a config file.
-    @config_filename = 'config/usps_progress.yml'
-    
+     
     # init db helper
     @db = SqlUtil.new(:url => @url, 
                       :user=> @user, 
