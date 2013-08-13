@@ -1,0 +1,8 @@
+---
+cur_pos: 19394
+timeout: 2
+db_user: root
+db_password: password
+db_url: localhost
+db_name: test01
+db_table_name: ZIP_POP

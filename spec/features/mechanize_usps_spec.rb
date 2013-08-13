@@ -31,18 +31,19 @@ describe MechanizeUsps do
   describe 'util methods' do
     before(:each) do
       # db credentials
-      @user = 'root'
-      @password = 'password'
-      @url = 'localhost'
-      @db_name = 'test01'
-      @table_name = 'ZIP_POP'
+      #@user = 'root'
+      #@password = 'password'
+      #@url = 'localhost'
+      #@db_name = 'test01'
+      #@table_name = 'ZIP_POP'
     
       # init the scraper
-      @mu = MechanizeUsps.new(:url => @url, 
-                         :user=> @user, 
-                         :password => @password, 
-                         :db_name => @db_name,
-                         :table_name => @table_name)
+      #@mu = MechanizeUsps.new(:url => @url, 
+      #                   :user=> @user, 
+      #                   :password => @password, 
+      #                   :db_name => @db_name,
+      #                   :table_name => @table_name)
+      @mu = MechanizeUsps.new
     end
     
     describe 'city_state_as_hash' do
@@ -68,18 +69,19 @@ describe MechanizeUsps do
   describe 'main methods' do
     before(:each) do
       # db credentials
-      @user = 'root'
-      @password = 'password'
-      @url = 'localhost'
-      @db_name = 'test01'
-      @table_name = 'ZIP_POP'
+      #@user = 'root'
+      #@password = 'password'
+      #@url = 'localhost'
+      #@db_name = 'test01'
+      #@table_name = 'ZIP_POP'
     
       # init the scraper
-      @mu = MechanizeUsps.new(:url => @url, 
-                         :user=> @user, 
-                         :password => @password, 
-                         :db_name => @db_name,
-                         :table_name => @table_name)
+      #@mu = MechanizeUsps.new(:url => @url, 
+      #                   :user=> @user, 
+      #                   :password => @password, 
+      #                   :db_name => @db_name,
+      #                   :table_name => @table_name)
+      @mu = MechanizeUsps.new
     end
     
     

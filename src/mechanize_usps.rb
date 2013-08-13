@@ -17,14 +17,22 @@ class MechanizeUsps
     @prefs = YamlUtil.read(@config_filename)
     
     # db credentials.
-    @url = params.fetch(:url)
-    @user = params.fetch(:user)
-    @password = params.fetch(:password)
-    @db_name= params.fetch(:db_name)
-    @table_name= params.fetch(:table_name)
+    #@url = params.fetch(:url)
+    #@user = params.fetch(:user)
+    #@password = params.fetch(:password)
+    #@db_name= params.fetch(:db_name)
+    #@table_name= params.fetch(:table_name)
+    
+    # yaml read test....
+    @user = @prefs['db_user']
+    @password = @prefs['db_password']
+    @url = @prefs['db_url']
+    @db_name = @prefs['db_name']
+    @table_name = @prefs['db_table_name']
     
     # UA. wikipedia is picky on the UA.
-    @user_agent = "'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-us) AppleWebKit/533.17.8 (KHTML, like Gecko) Version/5.0.1 Safari/533.17.8' );"
+    #@user_agent = "'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-us) AppleWebKit/533.17.8 (KHTML, like Gecko) Version/5.0.1 Safari/533.17.8' );"
+    @user_agent = @prefs['user_agent']
     
     # starting usps url.
     # basically, you just need to change the zip code.
