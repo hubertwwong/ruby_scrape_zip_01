@@ -145,8 +145,12 @@ describe MechanizeUsps do
     
     # main runner..
     describe 'runner' do
-      it 'should complete' do
-        result = @mu.run(13390, 3)
+      xit 'run' do
+        result = @mu.run(18200, 2)
+      end
+      
+      it 'run yaml' do
+        result = @mu.run_yaml
       end
     end
   end

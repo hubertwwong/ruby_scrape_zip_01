@@ -25,9 +25,7 @@ class MechanizeUsps
     @web_url = 'https://tools.usps.com/go/ZipLookupResultsAction!input.action?resultMode=2&companyName=&address1=&address2=&city=&state=Select&urbanCode=&postalCode=00000&zip='
 
     # reading a config file.
-    #@config_filename = 'config/usps_progress.yml'
-    #@prefs = YamlUtil.read(@config_filename)
-    #puts @prefs.inspect
+    @config_filename = 'config/usps_progress.yml'
     
     # init db helper
     @db = SqlUtil.new(:url => @url, 
@@ -40,6 +38,30 @@ class MechanizeUsps
   ############################################################################
   
   # loops through the main method and stores the result into the db.
+  # using the yaml file instead.
+  def run_yaml
+    # load the yaml file.
+    @prefs = YamlUtil.read(@config_filename)
+    #puts @prefs.inspect
+    cur_offset = @prefs['cur_pos']
+    cur_timeout = @prefs['timeout']
+    
+    cur_offset.upto(99999) do |i|
+      puts 'on ' + i.to_s
+      self.find_and_save_zip(i)
+      
+      # update position.
+      @prefs.store('cur_pos', i)
+      #puts @prefs.inspect
+      #puts @config_filename.to_s
+      YamlUtil.write(@config_filename.to_s, @prefs)
+      
+      # sleep
+      sleep cur_timeout
+    end
+  end
+  
+  # loops through the main method and stores the result into the db.
   # has an offset argument that can be used to scrape in parallel.
   def run(offset, timeout)
     puts 'offset ' + offset.to_s
@@ -50,7 +72,8 @@ class MechanizeUsps
       # update position.
       #@prefs.store("cur_pos", i)
       #puts @prefs.inspect
-      #YamlUtil.write(@config_filename, @prefs)
+      #puts @config_filename.to_s
+      #YamlUtil.write(@config_filename.to_s, @prefs)
       
       # sleep
       sleep timeout
