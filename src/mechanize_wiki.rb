@@ -4,6 +4,7 @@ require 'mechanize'
 require_relative 'sql_util'
 require_relative 'scrape_util'
 require_relative 'state_util'
+require_relative 'yaml_util'
 
 class MechanizeWiki
   
