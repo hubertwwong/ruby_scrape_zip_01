@@ -1,12 +1,14 @@
 #ABOUT
-===========
 A interview project that I did to in the span or 4 days or so to figure out the population of
 every city of the US.
 
 
+
+
 #Assumptions
-===========
-## Program assumes that a mysql test db is created. The scrapers are writing new results as it sees it.
+============
+## Program assumes that a mysql test db is created. 
+The scrapers are writing new results as it sees it.
 
 I put the settings in 2 yml files in the config directory. Here are the settings.
 db_user: root
@@ -15,14 +17,14 @@ db_url: localhost
 db_name: test01
 db_table_name: ZIP_POP
 
-## need the correct gems installed in the system. I think you can just run the 'bundle' command and it should install all the necessary gems.
+## need the correct gems installed in the system. 
+I think you can just run the 'bundle' command and it should install all the necessary gems.
 
 
 
 
 #To Run
-===========
-
+============
 ruby run_usps.rb
 
 Calls the usps scraper.
