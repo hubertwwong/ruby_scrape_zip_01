@@ -1,4 +1,8 @@
-#Notes on using this scraper:
+#ABOUT
+===========
+A interview project that I did to in the span or 4 days or so to figure out the population of
+every city of the US.
+
 
 #Assumptions
 ===========
